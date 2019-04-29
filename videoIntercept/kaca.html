@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+		<html>
+		<head>
+			<meta charset="utf-8">
+			<title>视屏接图</title>
+		</head>
+		<body>
+		<div class="center" >
+			<div id="videopanel" style="display: none;"></div>
+			<!--<div id="clickme">click</div>-->
+			<canvas id="icanvas" width="500" height="400"></canvas>
+			<canvas id="icanvasimg" width="500" height="400"></canvas>
+		</div>
+		
+		<script>
+		var video1;
+		var videoDiv;
+		
+		function createVideo(){
+		     video1=document.createElement("video");//创建video
+		     video1.width="500";
+		     video1.height="400";
+		     video1.autoplay = 'autoplay';
+		     video1.loop=true;
+		     videoDiv=document.getElementById("videopanel");//获取video的外层容器
+		     videoDiv.appendChild(video1);
+		     video1.setAttribute('src',"img/video.mp4");
+		
+		}  
+		function drawvideo(){	
+			icanvas=document.getElementById("icanvas");
+			var context=icanvas.getContext("2d");//第一个复制video的画布
+			context.drawImage(video1,0,0,video1.width,video1.height);
+		}
+		
+		function drawimg(a,b){
+			var c2=document.getElementById("icanvas");
+			var c2img=document.getElementById("icanvasimg");
+			var contextimg=c2img.getContext("2d");//第二个截图的画布
+//			contextimg.drawImage(c2,0,0,c2.width,c2.height);    //全屏
+			contextimg.drawImage(c2,0,0,c2.width,c2.height,a,b,100,100);//小屏
+	  }
+		window.onload=function(){
+			createVideo();
+			video1.play();
+			setInterval(drawvideo,100);
+//			var clickbtn=document.getElementById('clickme');  //点击添加
+//			clickbtn.onclick=function(){
+//				drawimg();
+//			};
+            var iNow = 0;
+            if(iNow<5){
+            	setInterval(function(){
+					drawimg(iNow*100,0);
+					iNow++;
+					if(iNow>5){
+						drawimg((iNow-6)*100,100);
+						iNow++;
+						iNow-=1;
+					}
+					if(iNow>9){
+						drawimg((iNow-11)*100,200);
+						iNow++;
+						iNow-=1;
+					}
+					if(iNow>14){
+						drawimg((iNow-16)*100,300);
+						iNow++;
+						iNow-=1;
+					}
+					if(iNow>18){
+						drawimg((iNow-21)*100,400);
+						iNow++;
+						iNow-=1;
+					}
+					if(iNow>19){
+						iNow= 0;
+					}
+				},2000)
+           }
+		}
+		
+		</script>
+		
+		</body>
+	</html>
